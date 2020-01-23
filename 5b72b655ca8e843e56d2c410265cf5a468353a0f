@@ -1,0 +1,7 @@
+Verified+1: CI Jenkins
+Code-Review+2: Alexander Morozov <alexander_morozov@epam.com>
+Submitted-by: Alexander Morozov <alexander_morozov@epam.com>
+Submitted-at: Thu, 23 Jan 2020 10:54:43 +0000
+Reviewed-on: https://gerrit-oc-green-edp-cicd.delivery.aws.main.edp.projects.epam.com/c/admin-console-operator/+/109
+Project: admin-console-operator
+Branch: refs/heads/master
