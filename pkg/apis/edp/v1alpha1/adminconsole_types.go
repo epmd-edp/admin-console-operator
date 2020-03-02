@@ -1,6 +1,7 @@
 package v1alpha1
 
 import (
+	coreV1Api "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"time"
 )
@@ -11,12 +12,13 @@ import (
 // AdminConsoleSpec defines the desired state of AdminConsole
 // +k8s:openapi-gen=true
 type AdminConsoleSpec struct {
-	Image                 string                      `json:"image"`
-	Version               string                      `json:"version"`
-	KeycloakSpec          KeycloakSpec                `json:"keycloakSpec, omitempty"`
-	EdpSpec               EdpSpec                     `json:"edpSpec"`
-	DbSpec                AdminConsoleDbSettings      `json:"dbSpec, omitempty"`
-	ExternalConfiguration []ExternalConfigurationItem `json:"externalConfiguration, omitempty"`
+	Image                 string                           `json:"image"`
+	Version               string                           `json:"version"`
+	ImagePullSecrets      []coreV1Api.LocalObjectReference `json:"imagePullSecrets, omitempty"`
+	KeycloakSpec          KeycloakSpec                     `json:"keycloakSpec, omitempty"`
+	EdpSpec               EdpSpec                          `json:"edpSpec"`
+	DbSpec                AdminConsoleDbSettings           `json:"dbSpec, omitempty"`
+	ExternalConfiguration []ExternalConfigurationItem      `json:"externalConfiguration, omitempty"`
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 }
 
