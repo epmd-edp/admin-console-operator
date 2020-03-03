@@ -2,14 +2,14 @@
 apiVersion: authorization.openshift.io/v1
 kind: RoleBinding
 metadata:
-  name: admin-console-operator
+  name: {{ .Values.name }}-edp-admin-{{ .Values.namespace }}
 roleRef:
-  name: edp-deploy-role
+  name: admin
 subjects:
   - kind: ServiceAccount
-    name: edp
+    name: {{ .Values.name }}-edp
     namespace: {{ .Values.namespace }}
 userNames:
-  - system:serviceaccount:{{ .Values.namespace }}:edp
+  - system:serviceaccount:{{ .Values.namespace }}:{{ .Values.name }}-edp
 groupNames: []
 {{- end -}}
