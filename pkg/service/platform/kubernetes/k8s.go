@@ -162,6 +162,10 @@ func (service K8SService) CreateDeployConf(ac v1alpha1.AdminConsole, url string)
 									Value: "maven",
 								},
 								{
+									Name:  "TEST_REPORT",
+									Value: ac.Spec.EdpSpec.TestReport,
+								},
+								{
 									Name:  "DEPLOYMENT_SCRIPT",
 									Value: "helm-chart,openshift-template",
 								},
