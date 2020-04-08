@@ -176,6 +176,10 @@ func (service OpenshiftService) CreateDeployConf(ac v1alpha1.AdminConsole, url s
 									Value: "maven",
 								},
 								{
+									Name:  "TEST_REPORT",
+									Value: ac.Spec.EdpSpec.TestReport,
+								},
+								{
 									Name:  "DEPLOYMENT_SCRIPT",
 									Value: "helm-chart,openshift-template",
 								},
