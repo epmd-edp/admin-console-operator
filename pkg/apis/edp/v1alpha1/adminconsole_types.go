@@ -26,6 +26,7 @@ type EdpSpec struct {
 	Name                  string `json:"name, omitempty"`
 	DnsWildcard           string `json:"dnsWildcard"`
 	IntegrationStrategies string `json:"integrationStrategies,omitempty"`
+	TestReport            string `json:"testReport,omitempty"`
 }
 
 type KeycloakSpec struct {
