@@ -1,0 +1,25 @@
+<<<<<<< HEAD   (5bf1ba [EPMDEDP-5282] Add DB configuration to initial deployment)
+=======
+apiVersion: v2.edp.epam.com/v1alpha1
+kind: AdminConsole
+metadata:
+  name: example-adminconsole
+spec:
+  image: epamedp/edp-admin-console
+  version: "2.0.0"
+  basePath: ""
+  edpSpec:
+    name:
+    dnsWildcard: delivery.aws.main.edp.projects.epam.com
+    version: "2.0"
+    integrationStrategies: "Create,Clone"
+    testReportTools: "Allure,Gatling"
+  dbSpec:
+    enabled: false
+    name: ""
+    hostname: ""
+    port: ""
+  keycloakSpec:
+    enabled: false
+    url: ""
+>>>>>>> CHANGE (e8c9dc [EPMDEDP-4955] Implement context path supporting in admin co)

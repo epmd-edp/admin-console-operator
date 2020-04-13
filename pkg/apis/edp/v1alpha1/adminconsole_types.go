@@ -1,9 +1,10 @@
 package v1alpha1
 
 import (
+	"time"
+
 	coreV1Api "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"time"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -15,9 +16,13 @@ type AdminConsoleSpec struct {
 	Image            string                           `json:"image"`
 	Version          string                           `json:"version"`
 	ImagePullSecrets []coreV1Api.LocalObjectReference `json:"imagePullSecrets,omitempty"`
+<<<<<<< HEAD   (5bf1ba [EPMDEDP-5282] Add DB configuration to initial deployment)
 	KeycloakSpec     KeycloakSpec                     `json:"keycloakSpec,omitempty"`
 	EdpSpec          EdpSpec                          `json:"edpSpec"`
 	DbSpec           AdminConsoleDbSettings           `json:"dbSpec,omitempty"`
+=======
+	BasePath         string                           `json:"basePath, omitempty"`
+>>>>>>> CHANGE (e8c9dc [EPMDEDP-4955] Implement context path supporting in admin co)
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 }
 
