@@ -497,7 +497,7 @@ func (service OpenshiftService) GetDisplayName(ac v1alpha1.AdminConsole) (string
 
 	displayName := project.GetObjectMeta().GetAnnotations()["openshift.io/display-name"]
 	if displayName == "" {
-		return "", errors.New(fmt.Sprintf("Project display name does not set"))
+		return ac.Namespace + "-edp", nil
 	}
 	return displayName, nil
 }
