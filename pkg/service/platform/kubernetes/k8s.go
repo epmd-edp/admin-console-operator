@@ -48,12 +48,26 @@ type K8SService struct {
 
 func (service K8SService) CreateDeployConf(ac v1alpha1.AdminConsole, url string) error {
 
-	db := "false"
 	k := "false"
 	t := true
 	f := false
 	var rc int32 = 1
 	var id int64 = 1001
+	var err error
+
+	dbEnvVars := []coreV1Api.EnvVar{
+		{
+			Name:  "DB_ENABLED",
+			Value: "false",
+		},
+	}
+
+	if ac.Spec.DbSpec.Enabled {
+		dbEnvVars, err = service.GenerateDbSettings(ac)
+		if err != nil {
+			return errors.Wrap(err, "Failed to generate environment variables for shared database!")
+		}
+	}
 
 	l := platformHelper.GenerateLabels(ac.Name)
 	do := &appsV1Api.Deployment{
@@ -100,10 +114,6 @@ func (service K8SService) CreateDeployConf(ac v1alpha1.AdminConsole, url string)
 								{
 									Name:  "EDP_ADMIN_CONSOLE_VERSION",
 									Value: ac.Spec.Version,
-								},
-								{
-									Name:  "DB_ENABLED",
-									Value: db,
 								},
 								{
 									Name: "EDP_VERSION",
@@ -254,6 +264,8 @@ func (service K8SService) CreateDeployConf(ac v1alpha1.AdminConsole, url string)
 	if !k8serrors.IsNotFound(err) {
 		return err
 	}
+
+	do.Spec.Template.Spec.Containers[0].Env = append(do.Spec.Template.Spec.Containers[0].Env, dbEnvVars...)
 
 	d, err = service.AppsClient.Deployments(do.Namespace).Create(do)
 	if err != nil {
