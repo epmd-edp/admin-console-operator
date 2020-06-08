@@ -62,8 +62,21 @@ func (service OpenshiftService) CreateDeployConf(ac v1alpha1.AdminConsole, url s
 		return errors.Wrap(err, "Unable to build an OpenshiftClusterURL value")
 	}
 
-	dbEnabled := "false"
 	keycloakEnabled := "false"
+
+	dbEnvVars := []coreV1Api.EnvVar{
+		{
+			Name:  "DB_ENABLED",
+			Value: "false",
+		},
+	}
+
+	if ac.Spec.DbSpec.Enabled {
+		dbEnvVars, err = service.GenerateDbSettings(ac)
+		if err != nil {
+			return errors.Wrap(err, "Failed to generate environment variables for shared database!")
+		}
+	}
 
 	labels := platformHelper.GenerateLabels(ac.Name)
 	consoleDcObject := &appsV1Api.DeploymentConfig{
@@ -110,10 +123,6 @@ func (service OpenshiftService) CreateDeployConf(ac v1alpha1.AdminConsole, url s
 								{
 									Name:  "EDP_ADMIN_CONSOLE_VERSION",
 									Value: ac.Spec.Version,
-								},
-								{
-									Name:  "DB_ENABLED",
-									Value: dbEnabled,
 								},
 								{
 									Name: "EDP_VERSION",
@@ -259,6 +268,7 @@ func (service OpenshiftService) CreateDeployConf(ac v1alpha1.AdminConsole, url s
 		if k8serrors.IsNotFound(err) {
 			msg := fmt.Sprintf("Creating DeploymentConfig %s/%s for Admin Console %s", consoleDcObject.Namespace, consoleDcObject.Name, ac.Name)
 			log.V(1).Info(msg)
+			consoleDcObject.Spec.Template.Spec.Containers[0].Env = append(consoleDcObject.Spec.Template.Spec.Containers[0].Env, dbEnvVars...)
 			consoleDc, err = service.appClient.DeploymentConfigs(consoleDcObject.Namespace).Create(consoleDcObject)
 			if err != nil {
 				return err
