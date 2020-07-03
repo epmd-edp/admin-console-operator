@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0effe61_25af9a90",
+        "filename": "deploy-templates/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2020-07-03T09:45:11Z",
+      "side": 1,
+      "message": "Lets switch to 2.4.0 version",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "26a8bf3d88957b6815fd6fd9d750e72279f0b0c2",
+      "serverId": "0350cb7f-c1b1-4710-a647-f6632dbafb3c",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d4d84a_8e18732e",
+        "filename": "deploy-templates/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2020-07-03T09:45:11Z",
+      "side": 1,
+      "message": "I suppose we should have image from Docker hub here",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 86
+      },
+      "revId": "26a8bf3d88957b6815fd6fd9d750e72279f0b0c2",
+      "serverId": "0350cb7f-c1b1-4710-a647-f6632dbafb3c",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a69679_de38f2f6",
+        "filename": "deploy-templates/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2020-07-03T09:45:11Z",
+      "side": 1,
+      "message": "Lets switch to 2.4.0 version",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "26a8bf3d88957b6815fd6fd9d750e72279f0b0c2",
+      "serverId": "0350cb7f-c1b1-4710-a647-f6632dbafb3c",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a985e5_6803b0ea",
+        "filename": "deploy-templates/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2020-07-03T09:45:11Z",
+      "side": 1,
+      "message": "Lets switch to 2.4.0 version",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "26a8bf3d88957b6815fd6fd9d750e72279f0b0c2",
+      "serverId": "0350cb7f-c1b1-4710-a647-f6632dbafb3c",
+      "unresolved": true
+    }
+  ]
+}
