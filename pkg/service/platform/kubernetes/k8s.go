@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
+
 	"github.com/epmd-edp/admin-console-operator/v2/pkg/apis/edp/v1alpha1"
 	"github.com/epmd-edp/admin-console-operator/v2/pkg/client/admin_console"
 	adminConsoleSpec "github.com/epmd-edp/admin-console-operator/v2/pkg/service/admin_console/spec"
@@ -30,7 +32,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
-	"strconv"
 )
 
 var log = logf.Log.WithName("platform")
@@ -53,6 +54,11 @@ func (service K8SService) CreateDeployConf(ac v1alpha1.AdminConsole, url string)
 	f := false
 	var rc int32 = 1
 	var id int64 = 1001
+
+	basePath := ""
+	if len(ac.Spec.BasePath) != 0 {
+		basePath = fmt.Sprintf("/%v", ac.Spec.BasePath)
+	}
 
 	l := platformHelper.GenerateLabels(ac.Name)
 	do := &appsV1Api.Deployment{
@@ -95,6 +101,10 @@ func (service K8SService) CreateDeployConf(ac v1alpha1.AdminConsole, url string)
 								{
 									Name:  "HOST",
 									Value: url,
+								},
+								{
+									Name:  "BASE_PATH",
+									Value: basePath,
 								},
 								{
 									Name:  "EDP_ADMIN_CONSOLE_VERSION",
@@ -713,6 +723,11 @@ func (service K8SService) CreateExternalEndpoint(ac v1alpha1.AdminConsole) error
 		return err
 	}
 
+	basePath := "/"
+	if len(ac.Spec.BasePath) != 0 {
+		basePath = fmt.Sprintf("/%v", ac.Spec.BasePath)
+	}
+
 	io := &v1beta1.Ingress{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      ac.Name,
@@ -727,7 +742,7 @@ func (service K8SService) CreateExternalEndpoint(ac v1alpha1.AdminConsole) error
 						HTTP: &v1beta1.HTTPIngressRuleValue{
 							Paths: []v1beta1.HTTPIngressPath{
 								{
-									Path: "/",
+									Path: basePath,
 									Backend: v1beta1.IngressBackend{
 										ServiceName: ac.Name,
 										ServicePort: intstr.IntOrString{

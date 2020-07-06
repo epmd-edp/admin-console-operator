@@ -18,6 +18,7 @@ type AdminConsoleSpec struct {
 	KeycloakSpec     KeycloakSpec                     `json:"keycloakSpec,omitempty"`
 	EdpSpec          EdpSpec                          `json:"edpSpec"`
 	DbSpec           AdminConsoleDbSettings           `json:"dbSpec,omitempty"`
+	BasePath         string                           `json:"basePath, omitempty"`
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 }
 

@@ -3,14 +3,15 @@ package openshift
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
+	"strconv"
+
 	"github.com/epmd-edp/admin-console-operator/v2/pkg/apis/edp/v1alpha1"
 	adminConsoleSpec "github.com/epmd-edp/admin-console-operator/v2/pkg/service/admin_console/spec"
 	platformHelper "github.com/epmd-edp/admin-console-operator/v2/pkg/service/platform/helper"
 	"github.com/epmd-edp/admin-console-operator/v2/pkg/service/platform/kubernetes"
-	"reflect"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
-	"strconv"
 
 	appsV1Api "github.com/openshift/api/apps/v1"
 	authV1Api "github.com/openshift/api/authorization/v1"
@@ -64,6 +65,11 @@ func (service OpenshiftService) CreateDeployConf(ac v1alpha1.AdminConsole, url s
 
 	keycloakEnabled := "false"
 
+	basePath := ""
+	if len(ac.Spec.BasePath) != 0 {
+		basePath = fmt.Sprintf("/%v", ac.Spec.BasePath)
+	}
+
 	labels := platformHelper.GenerateLabels(ac.Name)
 	consoleDcObject := &appsV1Api.DeploymentConfig{
 		ObjectMeta: metav1.ObjectMeta{
@@ -105,6 +111,10 @@ func (service OpenshiftService) CreateDeployConf(ac v1alpha1.AdminConsole, url s
 								{
 									Name:  "HOST",
 									Value: url,
+								},
+								{
+									Name:  "BASE_PATH",
+									Value: basePath,
 								},
 								{
 									Name:  "EDP_ADMIN_CONSOLE_VERSION",
@@ -275,7 +285,10 @@ func (service OpenshiftService) CreateDeployConf(ac v1alpha1.AdminConsole, url s
 func (service OpenshiftService) CreateExternalEndpoint(ac v1alpha1.AdminConsole) error {
 
 	labels := platformHelper.GenerateLabels(ac.Name)
-
+	basePath := "/"
+	if len(ac.Spec.BasePath) != 0 {
+		basePath = fmt.Sprintf("/%v", ac.Spec.BasePath)
+	}
 	consoleRouteObject := &routeV1Api.Route{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      ac.Name,
@@ -291,6 +304,7 @@ func (service OpenshiftService) CreateExternalEndpoint(ac v1alpha1.AdminConsole)
 				Name: ac.Name,
 				Kind: "Service",
 			},
+			Path: basePath,
 		},
 	}
 
