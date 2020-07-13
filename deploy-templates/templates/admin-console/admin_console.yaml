@@ -16,7 +16,11 @@ spec:
     name: {{ .Values.global.edpName }}
     dnsWildcard: {{ .Values.global.dnsWildCard }}
     version: {{.Values.global.version}}
+  {{- if eq .Values.global.platform "kubernetes" }}
+    integrationStrategies: "Import"
+  {{ else }}
     integrationStrategies: "Create,Clone,Import"
+  {{- end -}}
   dbSpec:
     enabled: true
     name: edp-install-wizard-db
