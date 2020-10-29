@@ -24,8 +24,6 @@ const (
 )
 
 type AdminConsoleService interface {
-	// This is an entry point for service package. Invoked in err = r.service.Install(*instance) sonar_controller.go, Reconcile method.
-	Install(instance v1alpha1.AdminConsole) (*v1alpha1.AdminConsole, error)
 	ExposeConfiguration(instance v1alpha1.AdminConsole) (*v1alpha1.AdminConsole, error)
 	Integrate(instance v1alpha1.AdminConsole) (*v1alpha1.AdminConsole, error)
 	IsDeploymentReady(instance v1alpha1.AdminConsole) (bool, error)
